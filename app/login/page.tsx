@@ -22,8 +22,8 @@ export default function LoginPage() {
 
     try {
       const result = await signIn("credentials", {
-        employeeId,
-        passcode,
+        employeeId: employeeId.trim(),
+        passcode: passcode.trim(),
         redirect: false,
       });
 
@@ -33,8 +33,13 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/dashboard");
-      router.refresh();
+      if (result?.ok) {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setError("Login failed. Please try again.");
+        setLoading(false);
+      }
     } catch (error) {
       setError("Something went wrong. Please try again.");
       setLoading(false);
