@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { broughtLunch, foodRequest } = await req.json();
+    const body = await req.json();
+    const { broughtLunch, foodRequest } = body;
 
     const lunchUpdate = await prisma.lunchUpdate.create({
       data: {
